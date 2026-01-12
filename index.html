@@ -176,37 +176,47 @@
       No spam. Only one email when we launch.
     </div>
   </div>
+  <div id="cookie-banner">
+    <p>
+        This website uses cookies to improve your experience and analyse traffic.
+    </p>
+    <button id="accept-cookies">Accept</button>
+  </div>
 
   <script>
     const form = document.getElementById("email-form");
     const successMessage = document.getElementById("success-message");
 
     form.addEventListener("submit", async function (e) {
-      e.preventDefault();
+        e.preventDefault();
 
-      const response = await fetch(form.action, {
+        const response = await fetch(form.action, {
         method: form.method,
         body: new FormData(form),
-        headers: {
-          Accept: "application/json",
-        },
-      });
+        headers: { Accept: "application/json" },
+        });
 
-      if (response.ok) {
+        if (response.ok) {
         form.style.display = "none";
         successMessage.style.display = "block";
-        gtag('event', 'email_signup', {
-          event_category: 'engagement',
-          event_label: 'Coming Soon Form'
-        });
-      }
+
+        if (typeof gtag === "function") {
+            gtag('event', 'email_signup', {
+            event_category: 'engagement',
+            event_label: 'Coming Soon Form'
+            });
+        }
+        }
     });
-  </script>
+    </script>
+
   <script>
     const cookieBanner = document.getElementById("cookie-banner");
     const acceptCookiesBtn = document.getElementById("accept-cookies");
 
     function loadGoogleAnalytics() {
+        if (window.gtag) return;
+
         const script1 = document.createElement("script");
         script1.async = true;
         script1.src = "https://www.googletagmanager.com/gtag/js?id=G-N0P0H3SXSR";
@@ -234,7 +244,7 @@
         cookieBanner.style.display = "none";
         loadGoogleAnalytics();
     });
-</script>
+    </script>
 
   <div id="cookie-banner">
     <p>
