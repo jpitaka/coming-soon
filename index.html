@@ -12,16 +12,6 @@
     content="We are working on something exciting. Leave your email and be the first to know when we launch."
   />
 
-  <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0P0H3SXSR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-N0P0H3SXSR');
-</script>
-
   <!-- Open Graph -->
   <meta property="og:title" content="Something New Is Coming" />
   <meta
@@ -121,6 +111,38 @@
         flex-direction: column;
       }
     }
+    #cookie-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111;
+    color: #fff;
+    padding: 16px 20px;
+    border-radius: 8px;
+    max-width: 420px;
+    width: calc(100% - 40px);
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.9rem;
+    z-index: 9999;
+    }
+
+    #cookie-banner p {
+    margin: 0;
+    opacity: 0.9;
+    }
+
+    #cookie-banner button {
+    background: #00c2ff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    }
   </style>
 </head>
 
@@ -180,5 +202,45 @@
       }
     });
   </script>
+  <script>
+    const cookieBanner = document.getElementById("cookie-banner");
+    const acceptCookiesBtn = document.getElementById("accept-cookies");
+
+    function loadGoogleAnalytics() {
+        const script1 = document.createElement("script");
+        script1.async = true;
+        script1.src = "https://www.googletagmanager.com/gtag/js?id=G-N0P0H3SXSR";
+
+        const script2 = document.createElement("script");
+        script2.innerHTML = `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-N0P0H3SXSR');
+        `;
+
+        document.head.appendChild(script1);
+        document.head.appendChild(script2);
+    }
+
+    if (!localStorage.getItem("cookiesAccepted")) {
+        cookieBanner.style.display = "flex";
+    } else {
+        loadGoogleAnalytics();
+    }
+
+    acceptCookiesBtn.addEventListener("click", () => {
+        localStorage.setItem("cookiesAccepted", "true");
+        cookieBanner.style.display = "none";
+        loadGoogleAnalytics();
+    });
+</script>
+
+  <div id="cookie-banner">
+    <p>
+        This website uses cookies to improve your experience and analyse traffic.
+    </p>
+    <button id="accept-cookies">Accept</button>
+  </div>
 </body>
 </html>
