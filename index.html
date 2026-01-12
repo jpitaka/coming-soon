@@ -171,6 +171,10 @@
       if (response.ok) {
         form.style.display = "none";
         successMessage.style.display = "block";
+        gtag('event', 'email_signup', {
+          event_category: 'engagement',
+          event_label: 'Coming Soon Form'
+        });
       }
     });
   </script>
