@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 420px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="email"] {
+      flex: 1;
+      padding: 14px;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 14px 20px;
+      border-radius: 6px;
+      border: none;
+      background-color: #00c2ff;
+      color: #000;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #00a9df;
+    }
+
+    .note {
+      margin-top: 15px;
+      font-size: 0.85rem;
+      opacity: 0.75;
+    }
+
+    @media (max-width: 480px) {
+      form {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Something new is coming</h1>
+    <p>
+      We’re working on something exciting.<br />
+      Leave your email and be the first to know.
+    </p>
+
+    <form>
+      <input type="email" placeholder="Your email address" required />
+      <button type="submit">Notify me</button>
+    </form>
+
+    <div class="note">
+      No spam. Only one email when we launch.
+    </div>
+  </div>
+</body>
+</html>
