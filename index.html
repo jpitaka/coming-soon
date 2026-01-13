@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Something New Is Coming</title>
+  <title>BeyondTraining — Coming Soon</title>
 
   <meta
     name="description"
-    content="We are working on something exciting. Leave your email and be the first to know when we launch."
+    content="BeyondTraining helps young athletes grow, adapt and perform — on and off the field. Join the waitlist for early access."
   />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Something New Is Coming" />
+  <meta property="og:title" content="BeyondTraining — Coming Soon" />
   <meta
     property="og:description"
-    content="We are working on something exciting. Be the first to know when we launch."
+    content="Helping young athletes chase their football dreams. Join the waitlist for early access."
   />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://beyondtraining.co" />
@@ -24,195 +23,596 @@
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Something New Is Coming" />
+  <meta name="twitter:title" content="BeyondTraining — Coming Soon" />
   <meta
     name="twitter:description"
-    content="We are working on something exciting. Be the first to know."
+    content="Helping young athletes chase their football dreams. Join the waitlist for early access."
   />
 
   <meta http-equiv="Content-Language" content="en" />
   <link rel="icon" href="/favicon.ico" />
 
   <style>
-    * {
+    :root{
+      --bg-0: #070A0B;
+      --bg-1: #0B1112;
+      --grid: rgba(255,255,255,0.06);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.68);
+      --muted2: rgba(255,255,255,0.55);
+      --border: rgba(255,255,255,0.12);
+      --accent: #F5E14B; /* amarelo Framer-ish */
+      --accent2: rgba(245,225,75,0.16);
+      --shadow: 0 20px 60px rgba(0,0,0,0.55);
+      --radius: 16px;
+    }
+
+    *{
       box-sizing: border-box;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
     }
 
-    body {
+    html, body{
+      height: 100%;
+    }
+
+    body{
       margin: 0;
-      height: 100vh;
+      color: var(--text);
+      background: radial-gradient(900px 600px at 20% 10%, rgba(245,225,75,0.18), transparent 55%),
+                  radial-gradient(700px 500px at 80% 35%, rgba(0,194,255,0.08), transparent 60%),
+                  linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      overflow-x: hidden;
+    }
+
+    /* grid overlay (tipo Framer) */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.35;
+      mask-image: radial-gradient(circle at 30% 20%, rgba(0,0,0,1), rgba(0,0,0,0.3) 55%, rgba(0,0,0,0) 80%);
+    }
+
+    /* layout */
+    .page{
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wrap{
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* navbar */
+    .nav{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,11,0.55);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-inner{
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .brand-dot{
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px var(--accent2);
+      flex: 0 0 auto;
+    }
+
+    .nav-links{
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a{
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 10px;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .nav-links a:hover{
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+    }
+
+    .nav-cta{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: rgba(0,0,0,0.9);
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid rgba(0,0,0,0.1);
+      box-shadow: 0 10px 30px rgba(245,225,75,0.18);
+      transition: transform 0.12s ease, filter 0.12s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover{
+      transform: translateY(-1px);
+      filter: brightness(0.98);
+    }
+
+    /* hero */
+    .hero{
+      flex: 1;
+      padding: 64px 0 84px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid{
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .eyebrow{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted2);
+      font-size: 0.85rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .eyebrow::before{
+      content:"";
+      width: 34px;
+      height: 1px;
+      background: rgba(255,255,255,0.18);
+    }
+
+    h1{
+      margin: 0 0 18px;
+      font-size: 4rem;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      font-weight: 750;
+    }
+
+    .lead{
+      margin: 0 0 26px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.55;
+      max-width: 560px;
+    }
+
+    /* waitlist input (pill, tipo Framer) */
+    .waitlist{
+      margin-top: 10px;
+    }
+
+    .form-pill{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.25);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+      max-width: 560px;
+    }
+
+    .form-pill input[type="email"]{
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 1rem;
+      padding: 12px 14px;
+      border-radius: 999px;
+    }
+
+    .form-pill input::placeholder{
+      color: rgba(255,255,255,0.35);
+    }
+
+    .form-pill button{
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 12px 18px;
+      height: 44px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: rgba(0,0,0,0.9);
+      font-weight: 800;
+      font-size: 0.98rem;
+      min-width: 120px;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      white-space: nowrap;
+    }
+
+    .form-pill button:hover{
+      transform: translateY(-1px);
+      filter: brightness(0.98);
+    }
+
+    #success-message{
+      margin: 14px 0 0;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.98rem;
+    }
+
+    .meta-row{
+      margin-top: 16px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: rgba(255,255,255,0.62);
+      font-size: 0.9rem;
+      max-width: 560px;
+    }
+
+    .pill{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .pill strong{
+      color: rgba(255,255,255,0.86);
+      font-weight: 700;
+    }
+
+    /* right visual */
+    .visual{
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #ffffff;
-      text-align: center;
-      padding: 20px;
     }
 
-    .container {
-      max-width: 420px;
+    .visual-card{
       width: 100%;
+      max-width: 520px;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: radial-gradient(500px 500px at 55% 35%, rgba(245,225,75,0.20), transparent 60%),
+                  radial-gradient(600px 400px at 40% 70%, rgba(0,194,255,0.10), transparent 60%),
+                  rgba(0,0,0,0.22);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
     }
 
-    h1 {
-      font-size: 2.6rem;
-      margin-bottom: 12px;
+    .visual-card::after{
+      content:"";
+      position: absolute;
+      inset: -60px;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+      transform: rotate(20deg);
+      opacity: 0.18;
+      pointer-events: none;
     }
 
-    p {
-      font-size: 1.05rem;
-      opacity: 0.85;
-      margin-bottom: 30px;
+    .svg-wrap{
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 34px;
     }
 
-    form {
-      display: flex;
-      gap: 10px;
+    /* footer sections placeholders (para navegação estilo Framer) */
+    .sections{
+      padding: 0 0 70px;
     }
 
-    input[type="email"] {
-      flex: 1;
-      padding: 14px;
-      border-radius: 6px;
+    .section{
+      padding: 54px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .section h2{
+      margin: 0 0 10px;
+      font-size: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section p{
+      margin: 0;
+      color: var(--muted);
+      max-width: 820px;
+      line-height: 1.6;
+    }
+
+    /* animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .anim-left{
+      animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .anim-right{
+      animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: 0.08s;
+    }
+
+    /* cookie banner */
+    #cookie-banner{
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10,12,12,0.92);
+      color: rgba(255,255,255,0.9);
+      padding: 14px 16px;
+      border-radius: 14px;
+      max-width: 720px;
+      width: calc(100% - 36px);
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.92rem;
+      z-index: 9999;
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    }
+
+    #cookie-banner p{
+      margin: 0;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.35;
+    }
+
+    #cookie-banner button{
+      background: var(--accent);
       border: none;
-      font-size: 1rem;
-    }
-
-    button {
-      padding: 14px 20px;
-      border-radius: 6px;
-      border: none;
-      background-color: #00c2ff;
-      color: #000;
-      font-size: 1rem;
-      font-weight: 600;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
       cursor: pointer;
+      color: rgba(0,0,0,0.9);
+      white-space: nowrap;
     }
 
-    button:hover {
-      background-color: #00a9df;
-    }
+    /* responsive */
+    @media (max-width: 980px){
+      .hero-grid{
+        grid-template-columns: 1fr;
+        gap: 26px;
+      }
 
-    .note {
-      margin-top: 15px;
-      font-size: 0.85rem;
-      opacity: 0.75;
-    }
+      h1{
+        font-size: 3.1rem;
+      }
 
-    #success-message {
-      margin-top: 20px;
-      font-size: 1.1rem;
-    }
-
-    @media (max-width: 480px) {
-      form {
-        flex-direction: column;
+      .visual-card{
+        max-width: 560px;
       }
     }
-    #cookie-banner {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #111;
-    color: #fff;
-    padding: 16px 20px;
-    border-radius: 8px;
-    max-width: 420px;
-    width: calc(100% - 40px);
-    display: none;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    font-size: 0.9rem;
-    z-index: 9999;
-    }
 
-    #cookie-banner p {
-    margin: 0;
-    opacity: 0.9;
-    }
-
-    #cookie-banner button {
-    background: #00c2ff;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 5px;
-    font-weight: 600;
-    cursor: pointer;
-    }
-
-    @keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(12px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    }
-
-    .container {
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    .social-proof {
-    margin-top: 20px;
-    font-size: 0.85rem;
-    opacity: 0.8;
-    }
-
-    .social-proof span {
-    display: block;
-    margin-top: 4px;
-    font-weight: 600;
-    opacity: 0.9;
+    @media (max-width: 720px){
+      .nav-links{ display: none; }
+      .hero{ padding: 46px 0 70px; }
+      h1{ font-size: 2.55rem; }
+      .form-pill{ flex-direction: column; border-radius: 18px; padding: 12px; }
+      .form-pill input[type="email"]{ width: 100%; padding: 12px 12px; }
+      .form-pill button{ width: 100%; }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Helping young athletes chase their football dreams</h1>
-    <p>
-      We’re building a platform that supports young athletes to grow, adapt and perform on and off the field.<br />
-      Leave your email to get early access.
-    </p>
+  <div class="page">
+    <header class="nav">
+      <div class="wrap">
+        <div class="nav-inner">
+          <a class="brand" href="#top" aria-label="BeyondTraining home">
+            <span class="brand-dot"></span>
+            BeyondTraining
+          </a>
 
-    <form
-      action="https://formspree.io/f/mjggvrdg"
-      method="POST"
-      id="email-form"
-    >
-      <input
-        type="email"
-        name="email"
-        placeholder="Your email address"
-        required
-      />
-      <button type="submit">Get early access</button>
-    </form>
+          <div class="nav-links" aria-label="Primary navigation">
+            <a href="#overview">Overview</a>
+            <a href="#features">Features</a>
+            <a href="#references">References</a>
+            <a href="#faq">FAQ</a>
+          </div>
 
-    <p id="success-message" style="display:none;">
-      You’re in. We’ll be in touch soon.
-    </p>
+          <a class="nav-cta" href="#waitlist">Waitlist</a>
+        </div>
+      </div>
+    </header>
 
-    <div class="social-proof">
-      Built by athletes who believe in commitment and ambition.
+    <main class="hero" id="top">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div class="anim-left">
+            <div class="eyebrow">BUILT FOR YOUNG ATHLETES</div>
+
+            <h1>Helping young athletes chase their football dreams</h1>
+
+            <p class="lead">
+              We’re building a platform that supports young athletes to grow, adapt and perform — on and off the field.
+              Join the waitlist for early access.
+            </p>
+
+            <div class="waitlist" id="waitlist">
+              <form
+                class="form-pill"
+                action="https://formspree.io/f/mjggvrdg"
+                method="POST"
+                id="email-form"
+              >
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="name@email.com"
+                  required
+                  aria-label="Email address"
+                />
+                <button type="submit">Join</button>
+              </form>
+
+              <p id="success-message" style="display:none;">
+                You’re in. We’ll be in touch soon.
+              </p>
+
+              <div class="meta-row">
+                <div class="pill">Built by <strong>athletes</strong> for athletes</div>
+                <div class="pill">Values: <strong>Commitment</strong> · <strong>Equity</strong> · <strong>Ambition</strong></div>
+              </div>
+
+              <div class="meta-row" style="margin-top:10px;">
+                <div class="pill" style="opacity:0.85;">No spam. Just support for your journey.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="visual anim-right" aria-hidden="true">
+            <div class="visual-card">
+              <div class="svg-wrap">
+                <!-- Placeholder visual (estilo line-art). Podes trocar por ilustração tua quando quiseres -->
+                <svg viewBox="0 0 600 600" width="100%" height="100%" role="img" aria-label="BeyondTraining visual">
+                  <defs>
+                    <radialGradient id="glow" cx="50%" cy="40%" r="60%">
+                      <stop offset="0%" stop-color="rgba(245,225,75,0.95)"/>
+                      <stop offset="55%" stop-color="rgba(245,225,75,0.18)"/>
+                      <stop offset="100%" stop-color="rgba(245,225,75,0)"/>
+                    </radialGradient>
+                    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="6" />
+                    </filter>
+                  </defs>
+
+                  <!-- glow -->
+                  <circle cx="340" cy="230" r="140" fill="url(#glow)" filter="url(#soft)"></circle>
+
+                  <!-- line art ball -->
+                  <g fill="none" stroke="rgba(255,255,255,0.78)" stroke-width="2.5">
+                    <circle cx="330" cy="260" r="120"></circle>
+                    <path d="M330 140 L382 200 L360 300 L300 300 L278 200 Z"></path>
+                    <path d="M278 200 L210 230"></path>
+                    <path d="M382 200 L450 230"></path>
+                    <path d="M300 300 L250 390"></path>
+                    <path d="M360 300 L410 390"></path>
+                    <path d="M210 230 L250 390"></path>
+                    <path d="M450 230 L410 390"></path>
+                  </g>
+
+                  <!-- accent core -->
+                  <g>
+                    <polygon points="330,176 370,220 355,290 305,290 290,220" fill="rgba(245,225,75,0.92)"></polygon>
+                    <polygon points="330,176 370,220 355,290 305,290 290,220" fill="rgba(245,225,75,0.92)" opacity="0.35" filter="url(#soft)"></polygon>
+                  </g>
+
+                  <!-- subtle particles -->
+                  <g fill="rgba(255,255,255,0.35)">
+                    <circle cx="120" cy="130" r="2"></circle>
+                    <circle cx="170" cy="90" r="2"></circle>
+                    <circle cx="520" cy="180" r="2"></circle>
+                    <circle cx="470" cy="120" r="2"></circle>
+                    <circle cx="520" cy="420" r="2"></circle>
+                    <circle cx="150" cy="470" r="2"></circle>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="sections">
+      <div class="wrap">
+        <section class="section" id="overview">
+          <h2>Overview</h2>
+          <p>
+            BeyondTraining is built to help young athletes pursue their dreams with guidance that supports performance on and off the field.
+          </p>
+        </section>
+
+        <section class="section" id="features">
+          <h2>Features</h2>
+          <p>
+            Training, recovery, and support — designed around commitment, adaptability, equity, and ambition. (You can expand this section later.)
+          </p>
+        </section>
+
+        <section class="section" id="references">
+          <h2>References</h2>
+          <p>
+            A space for testimonials, partners, or coaches. Keep it honest and simple when you have real references.
+          </p>
+        </section>
+
+        <section class="section" id="faq">
+          <h2>FAQ</h2>
+          <p>
+            Add the top 3 questions you keep hearing (e.g., “When is launch?”, “Who is it for?”, “How does early access work?”).
+          </p>
+        </section>
+      </div>
     </div>
 
-    <div class="note">
-      No spam. Just support for your journey.
+    <!-- Cookie banner (SÓ 1 vez) -->
+    <div id="cookie-banner">
+      <p>
+        This website uses cookies to analyse traffic and improve your experience.
+      </p>
+      <button id="accept-cookies">Accept</button>
     </div>
-  </div>
-  <div id="cookie-banner">
-    <p>
-        This website uses cookies to improve your experience and analyse traffic.
-    </p>
-    <button id="accept-cookies">Accept</button>
   </div>
 
   <script>
@@ -220,69 +620,62 @@
     const successMessage = document.getElementById("success-message");
 
     form.addEventListener("submit", async function (e) {
-        e.preventDefault();
+      e.preventDefault();
 
-        const response = await fetch(form.action, {
+      const response = await fetch(form.action, {
         method: form.method,
         body: new FormData(form),
         headers: { Accept: "application/json" },
-        });
+      });
 
-        if (response.ok) {
+      if (response.ok) {
         form.style.display = "none";
         successMessage.style.display = "block";
 
         if (typeof gtag === "function") {
-            gtag('event', 'email_signup', {
-            event_category: 'engagement',
-            event_label: 'Coming Soon Form'
-            });
+          gtag("event", "email_signup", {
+            event_category: "engagement",
+            event_label: "Waitlist Form",
+          });
         }
-        }
+      }
     });
-    </script>
+  </script>
 
   <script>
     const cookieBanner = document.getElementById("cookie-banner");
     const acceptCookiesBtn = document.getElementById("accept-cookies");
 
     function loadGoogleAnalytics() {
-        if (window.gtag) return;
+      if (window.gtag) return;
 
-        const script1 = document.createElement("script");
-        script1.async = true;
-        script1.src = "https://www.googletagmanager.com/gtag/js?id=G-N0P0H3SXSR";
+      const script1 = document.createElement("script");
+      script1.async = true;
+      script1.src = "https://www.googletagmanager.com/gtag/js?id=G-N0P0H3SXSR";
 
-        const script2 = document.createElement("script");
-        script2.innerHTML = `
+      const script2 = document.createElement("script");
+      script2.innerHTML = `
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-N0P0H3SXSR');
-        `;
+      `;
 
-        document.head.appendChild(script1);
-        document.head.appendChild(script2);
+      document.head.appendChild(script1);
+      document.head.appendChild(script2);
     }
 
     if (!localStorage.getItem("cookiesAccepted")) {
-        cookieBanner.style.display = "flex";
+      cookieBanner.style.display = "flex";
     } else {
-        loadGoogleAnalytics();
+      loadGoogleAnalytics();
     }
 
     acceptCookiesBtn.addEventListener("click", () => {
-        localStorage.setItem("cookiesAccepted", "true");
-        cookieBanner.style.display = "none";
-        loadGoogleAnalytics();
+      localStorage.setItem("cookiesAccepted", "true");
+      cookieBanner.style.display = "none";
+      loadGoogleAnalytics();
     });
-    </script>
-
-  <div id="cookie-banner">
-    <p>
-        This website uses cookies to improve your experience and analyse traffic.
-    </p>
-    <button id="accept-cookies">Accept</button>
-  </div>
+  </script>
 </body>
 </html>
