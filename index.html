@@ -46,15 +46,15 @@
       --graphite: #111827;
       --steel-grey: #6B7280;
 
-      /* Mapeamento para o teu layout atual (SEM mexer na estrutura) */
+      /* Mapeamento para o teu layout */
       --bg-0: var(--bt-navy);
-      --bg-1: #070B14; /* navy mais profundo (variação do BT Navy) */
+      --bg-1: #070B14;
 
       --grid: rgba(245,247,250,0.06);
 
-      --text: rgba(245,247,250,0.92);   /* Ice White */
-      --muted: rgba(245,247,250,0.70);  /* Ice White com opacidade */
-      --muted2: rgba(245,247,250,0.55); /* Ice White com opacidade */
+      --text: rgba(245,247,250,0.92);
+      --muted: rgba(245,247,250,0.70);
+      --muted2: rgba(245,247,250,0.55);
 
       --border: rgba(245,247,250,0.14);
 
@@ -76,28 +76,43 @@
     html, body{ height: 100%; }
 
     body{
-      margin: 0;
-      color: var(--text);
-      background:
-        /* “Horizon gradient” subtil + energia com Pulse Green */
-        radial-gradient(900px 600px at 20% 10%, rgba(53,242,138,0.16), transparent 55%),
-        radial-gradient(700px 500px at 80% 35%, rgba(53,242,138,0.06), transparent 60%),
-        linear-gradient(180deg, var(--bg-0), var(--bg-1));
-      overflow-x: hidden;
+    margin: 0;
+    color: var(--text);
+    background: none;       /* fundo vai para ::after */
+    overflow-x: hidden;
+    position: relative;     /* para gerir z-index */
     }
 
-    /* grid overlay (field lines abstract, subtil) */
+    /* fundo fixo (não muda com o scroll) */
+    body::after{
+    content:"";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -2;
+    background:
+        radial-gradient(900px 600px at 20% 10%, rgba(53,242,138,0.14), transparent 55%),
+        radial-gradient(700px 500px at 80% 35%, rgba(53,242,138,0.05), transparent 60%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
+    }
+
+
     body::before{
-      content:"";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
+    content:"";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1; /* fica acima do fundo, mas atrás do conteúdo */
+    background-image:
         linear-gradient(var(--grid) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-      background-size: 48px 48px;
-      opacity: 0.35;
-      mask-image: radial-gradient(circle at 50% 25%, rgba(0,0,0,1), rgba(0,0,0,0.35) 55%, rgba(0,0,0,0) 80%);
+    background-size: 48px 48px;
+    opacity: 0.28;
+    mask-image: radial-gradient(circle at 50% 25%,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0.45) 62%,
+        rgba(0,0,0,0) 88%
+    );
     }
 
     .wrap{
@@ -114,6 +129,47 @@
       align-items: center;
       justify-content: center;
       padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Progress Path (subtil) */
+    .progress-path{
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: grid;
+      place-items: center;
+      z-index: 0;
+      opacity: 1;
+    }
+
+    .progress-path svg{
+      width: min(1200px, 110vw);
+      height: auto;
+      transform: translateY(10px);
+    }
+
+    .path-base{
+      stroke: rgba(245,247,250,0.08); /* ~8% */
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .path-accent{
+      stroke: rgba(53,242,138,0.10); /* ~10% */
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .path-dot{
+      fill: rgba(53,242,138,0.14);
+      stroke: rgba(53,242,138,0.22);
+      stroke-width: 1;
     }
 
     .hero-grid{
@@ -122,6 +178,8 @@
       grid-template-columns: 1fr;
       justify-items: center;
       text-align: center;
+      position: relative;
+      z-index: 1; /* acima do path */
     }
 
     .eyebrow{
@@ -180,7 +238,7 @@
       padding: 10px;
       border-radius: 999px;
       border: 1px solid rgba(245,247,250,0.14);
-      background: rgba(11,18,32,0.45); /* BT Navy glass */
+      background: rgba(11,18,32,0.45);
       box-shadow: 0 18px 50px rgba(0,0,0,0.38);
       max-width: 560px;
       width: 100%;
@@ -250,13 +308,130 @@
       align-items: center;
     }
 
+    /* Secção abaixo do hero */
+    .after-hero{
+    padding: 70px 0 90px;
+    border-top: none;     /* remove a linha */
+    background: transparent;
+    margin-top: -1px;     /* mata qualquer seam de 1px */
+    position: relative;
+    z-index: 1;
+    }
+
+
+    .section-head{
+      max-width: 860px;
+      margin: 0 auto 26px;
+      text-align: center;
+    }
+
+    .section-eyebrow{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--muted2);
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .section-eyebrow::before,
+    .section-eyebrow::after{
+      content:"";
+      width: 26px;
+      height: 1px;
+      background: rgba(245,247,250,0.18);
+    }
+
+    .after-hero h2{
+      margin: 0 0 10px;
+      font-family: var(--font-head);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      font-size: 2.05rem;
+      color: rgba(245,247,250,0.94);
+    }
+
+    .vision{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 1.02rem;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .pillars{
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .pillar{
+      text-align: left;
+      padding: 18px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(245,247,250,0.12);
+      background: rgba(11,18,32,0.35);
+      backdrop-filter: blur(10px);
+    }
+
+    .pillar h3{
+      margin: 0 0 8px;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1.08rem;
+      letter-spacing: -0.01em;
+      color: rgba(245,247,250,0.93);
+    }
+
+    .pillar p{
+      margin: 0;
+      color: rgba(245,247,250,0.72);
+      line-height: 1.55;
+      font-size: 0.98rem;
+    }
+
+    .partner-cta{
+      margin-top: 22px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn-secondary{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(53,242,138,0.45);
+      background: rgba(53,242,138,0.08);
+      color: rgba(245,247,250,0.92);
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.12s ease, filter 0.12s ease, background 0.12s ease;
+      white-space: nowrap;
+    }
+
+    .btn-secondary:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+      background: rgba(53,242,138,0.12);
+    }
+
     /* cookie banner */
     #cookie-banner{
       position: fixed;
       bottom: 18px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(11,18,32,0.88); /* BT Navy */
+      background: rgba(11,18,32,0.88);
       color: rgba(245,247,250,0.92);
       padding: 14px 16px;
       border-radius: 14px;
@@ -295,23 +470,107 @@
 
     @media (max-width: 980px){
       h1{ font-size: 3.1rem; }
+      .pillars{ grid-template-columns: 1fr; }
+      .after-hero h2{ font-size: 1.85rem; }
     }
 
     @media (max-width: 720px){
       .hero{ padding: 0; }
       h1{ font-size: 2.55rem; }
+
       .form-pill{
         flex-direction: column;
         border-radius: 18px;
         padding: 12px;
       }
+
       .form-pill input[type="email"]{
         width: 100%;
         padding: 12px 12px;
       }
+
       .form-pill button{ width: 100%; }
+
       #cookie-banner{ flex-direction: column; align-items: flex-start; }
       #cookie-banner button{ width: 100%; }
+
+      /* no mobile, escondemos o path para ficar limpo */
+      .progress-path{ display: none; }
+    }
+    /* Smooth anchor scroll (extra, mesmo com JS) */
+    html { scroll-behavior: smooth; }
+
+    /* Scroll down indicator */
+    .scroll-indicator{
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    text-decoration: none;
+    z-index: 2;
+    opacity: 0.9;
+    transition: transform 180ms ease, opacity 180ms ease, filter 180ms ease;
+    }
+
+    .scroll-indicator svg{
+    width: 46px;
+    height: 46px;
+    transition: transform 180ms ease;
+    }
+
+    .scroll-indicator .frame{
+    stroke: rgba(245,247,250,0.90);
+    stroke-width: 3.5;
+    fill: transparent;
+    }
+
+    .scroll-indicator .arrow{
+    stroke: rgba(245,247,250,0.90);
+    stroke-width: 3.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    }
+
+    .scroll-indicator:hover{
+    transform: translateX(-50%) translateY(-2px) scale(1.02);
+    opacity: 1;
+    filter: brightness(1.02);
+    }
+
+    .scroll-indicator:hover svg{
+    transform: translateY(2px);
+    }
+
+    .scroll-indicator:hover .frame,
+    .scroll-indicator:hover .arrow{
+    stroke: rgba(53,242,138,0.95);
+    }
+
+    .scroll-indicator:focus-visible{
+    outline: 3px solid rgba(53,242,138,0.55);
+    outline-offset: 6px;
+    border-radius: 999px;
+    }
+
+    /* esconder ao fazer scroll */
+    .scroll-indicator.is-hidden{
+    opacity: 0;
+    transform: translateX(-50%) translateY(12px);
+    pointer-events: none;
+    }
+
+    /* se o banner de cookies estiver visível, sobe a seta para não bater */
+    body.cookies-visible .scroll-indicator{
+    bottom: 96px;
+    }
+
+    @media (max-width: 720px){
+    body.cookies-visible .scroll-indicator{ bottom: 120px; }
     }
   </style>
 </head>
@@ -353,8 +612,59 @@
           </div>
         </div>
       </div>
+      <a
+        href="#ecosystem"
+        class="scroll-indicator"
+        id="scroll-indicator"
+        aria-label="Scroll down to the next section"
+        >
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="16" y="6" width="32" height="52" rx="16" class="frame"></rect>
+            <line x1="32" y1="22" x2="32" y2="40" class="arrow"></line>
+            <polyline points="25,34 32,41 39,34" class="arrow"></polyline>
+        </svg>
+        </a>
     </div>
   </main>
+
+  <!-- Secção curta abaixo do hero -->
+  <section class="after-hero" id="ecosystem">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-eyebrow">THE ECOSYSTEM</div>
+        <h2>More than a waitlist. A global ecosystem for young athletes.</h2>
+        <p class="vision">
+          Structure to stay consistent. Opportunity to be seen. A future that lasts beyond the game.
+        </p>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar">
+          <h3>Structure</h3>
+          <p>Simple routines across training, nutrition and recovery.</p>
+        </div>
+
+        <div class="pillar">
+          <h3>Opportunity</h3>
+          <p>Tools and pathways that help talent get noticed.</p>
+        </div>
+
+        <div class="pillar">
+          <h3>Future</h3>
+          <p>Support beyond the pitch, so athletes can build a life with and after football.</p>
+        </div>
+      </div>
+
+      <div class="partner-cta">
+        <a
+          class="btn-secondary"
+          href="mailto:info@beyondtraining.co?subject=BeyondTraining%20Partnership"
+        >
+          Partnerships
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- Cookie banner (1x) -->
   <div id="cookie-banner">
@@ -413,16 +723,47 @@
     }
 
     if (!localStorage.getItem("cookiesAccepted")) {
-      cookieBanner.style.display = "flex";
+    cookieBanner.style.display = "flex";
+    document.body.classList.add("cookies-visible");
     } else {
-      loadGoogleAnalytics();
+    loadGoogleAnalytics();
     }
 
     acceptCookiesBtn.addEventListener("click", () => {
       localStorage.setItem("cookiesAccepted", "true");
       cookieBanner.style.display = "none";
       loadGoogleAnalytics();
+      document.body.classList.remove("cookies-visible");
     });
   </script>
+    <script>
+    const scrollIndicator = document.getElementById("scroll-indicator");
+    const ecosystemSection = document.getElementById("ecosystem");
+    const hero = document.querySelector(".hero");
+
+    if (scrollIndicator && ecosystemSection) {
+        scrollIndicator.addEventListener("click", (e) => {
+        e.preventDefault();
+        ecosystemSection.scrollIntoView({ behavior: "smooth" });
+        });
+
+        // Esconde a seta quando começas a sair do hero
+        if ("IntersectionObserver" in window && hero) {
+        const io = new IntersectionObserver(
+            ([entry]) => {
+            const show = entry.isIntersecting && entry.intersectionRatio > 0.6;
+            scrollIndicator.classList.toggle("is-hidden", !show);
+            },
+            { threshold: [0, 0.25, 0.6, 1] }
+        );
+        io.observe(hero);
+        } else {
+        // fallback simples
+        window.addEventListener("scroll", () => {
+            scrollIndicator.classList.toggle("is-hidden", window.scrollY > 80);
+        });
+        }
+    }
+    </script>
 </body>
 </html>
