@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>BeyondTraining — Coming Soon</title>
+  <title>BeyondTraining</title>
 
   <meta
     name="description"
@@ -792,6 +792,63 @@
         transition: none !important;
     }
     }
+
+    .to-top{
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+
+    display: grid;
+    place-items: center;
+
+    background: rgba(11,18,32,0.68);
+    border: 1px solid rgba(245,247,250,0.16);
+    color: rgba(245,247,250,0.92);
+
+    backdrop-filter: blur(10px);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+
+    cursor: pointer;
+    transition: transform 180ms ease, opacity 180ms ease, border-color 180ms ease, background 180ms ease;
+
+    z-index: 10001;          /* 👈 garante que fica por cima */
+    touch-action: manipulation; /* 👈 melhor em mobile */
+    }
+
+
+    .to-top svg{
+    width: 20px;
+    height: 20px;
+    transition: transform 180ms ease, color 180ms ease;
+    }
+
+    .to-top.show{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    }
+
+    .to-top:hover{
+    transform: translateY(-3px);
+    border-color: rgba(53,242,138,0.40);
+    background: rgba(11,18,32,0.78);
+    }
+
+    .to-top:hover svg{
+    transform: translateY(-1px);
+    color: var(--pulse-green);
+    }
+
+    @media (max-width: 720px){
+    .to-top{ right: 16px; bottom: 16px; }
+    }
   </style>
 </head>
 
@@ -921,6 +978,13 @@
     <button id="accept-cookies">Accept</button>
   </div>
 
+    <button id="to-top" class="to-top" type="button" aria-label="Back to top">
+        <!-- ícone seta para cima (SVG) -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 5l-6 6m6-6l6 6M12 5v14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+
   <script>
     const form = document.getElementById("email-form");
     const successMessage = document.getElementById("success-message");
@@ -1012,6 +1076,42 @@
             scrollIndicator.classList.toggle("is-hidden", window.scrollY > 80);
         });
         }
+    }
+    </script>
+
+    <script>
+    const toTopBtn = document.getElementById("to-top");
+    const cookieBannerEl = document.getElementById("cookie-banner");
+
+    function updateToTopVisibility() {
+        const showFrom = 260; // px
+        if (window.scrollY > showFrom) toTopBtn.classList.add("show");
+        else toTopBtn.classList.remove("show");
+    }
+
+    function updateToTopOffset() {
+        // Se o banner de cookies estiver visível, sobe o botão para não colidir
+        const bannerVisible = cookieBannerEl && getComputedStyle(cookieBannerEl).display !== "none";
+        toTopBtn.style.bottom = bannerVisible ? "96px" : "";
+    }
+
+    toTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    window.addEventListener("scroll", () => {
+        updateToTopVisibility();
+        updateToTopOffset();
+    }, { passive: true });
+
+    // estado inicial
+    updateToTopVisibility();
+    updateToTopOffset();
+
+    // quando aceitas cookies o banner desaparece — atualiza a posição
+    const acceptBtn = document.getElementById("accept-cookies");
+    if (acceptBtn) {
+        acceptBtn.addEventListener("click", () => setTimeout(updateToTopOffset, 0));
     }
     </script>
 </body>
