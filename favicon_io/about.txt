@@ -1,6 +1,6 @@
 This favicon was generated using the following font:
 
-- Font Title: Anton
+- Font Title: Sora
 - Font Author: undefined
-- Font Source: https://fonts.gstatic.com/s/anton/v26/1Ptgg87LROyAm0K08i4gS7lu.ttf
+- Font Source: https://fonts.gstatic.com/s/sora/v16/xMQOuFFYT72X5wkB_18qmnndmSe1mX-KIwNhBti0.ttf
 - Font License: undefined)
