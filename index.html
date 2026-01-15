@@ -308,6 +308,76 @@
       align-items: center;
     }
 
+    /* Faixa visual full-bleed (de fora a fora) */
+    .photo-band--full{
+    padding: 0;               /* sem “margens” em cima/baixo, fica colado */
+    position: relative;
+    }
+
+    .photo-frame--full{
+    position: relative;
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0;
+    overflow: hidden;
+
+    /* remove qualquer “linha” */
+    border: none;
+    box-shadow: none;
+
+    aspect-ratio: 16 / 9;
+    max-height: 520px;
+    background: transparent;
+
+    /* isto ajuda a “colar” visualmente */
+    isolation: isolate;
+    }
+
+    .photo-frame--full img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    }
+
+    /* overlay navy + toque pulse (mais suave e menos “chapado”) */
+    .photo-frame--full::after{
+    content:"";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background:
+        radial-gradient(900px 480px at 18% 28%, rgba(53,242,138,0.12), transparent 58%),
+        radial-gradient(700px 520px at 82% 60%, rgba(53,242,138,0.07), transparent 62%),
+        linear-gradient(180deg, rgba(11,18,32,0.42), rgba(11,18,32,0.50));
+    }
+
+    /* fade “real” nas margens (top + bottom) para fundir com o background */
+    .photo-frame--full::before{
+    content:"";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+
+    /* 1) Top fade  2) Bottom fade  3) Vignette lateral */
+    background:
+        linear-gradient(to bottom, rgba(11,18,32,0.92) 0%, rgba(11,18,32,0.0) 22%),
+        linear-gradient(to top,    rgba(11,18,32,0.92) 0%, rgba(11,18,32,0.0) 22%),
+        radial-gradient(120% 90% at 50% 50%, rgba(11,18,32,0.0) 55%, rgba(11,18,32,0.55) 100%);
+    }
+
+    /* opcional: micro-grain para esconder seams (se não quiseres, remove este bloco) */
+    .photo-frame--full{
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(245,247,250,0.03), transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(245,247,250,0.02), transparent 60%);
+    background-blend-mode: overlay;
+    }
+
+
     /* Secção abaixo do hero */
     .after-hero{
     padding: 70px 0 90px;
@@ -572,6 +642,110 @@
     @media (max-width: 720px){
     body.cookies-visible .scroll-indicator{ bottom: 120px; }
     }
+
+    /* Pillar thumbnail */
+    .pillar-thumb{
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(245,247,250,0.14);
+    background: rgba(11,18,32,0.35);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    margin-bottom: 12px;
+    position: relative;
+    }
+
+    .pillar-thumb img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.02);
+    }
+
+    /* Duotone/overlay consistente */
+    .pillar-thumb::after{
+    content:"";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(11,18,32,0.35), rgba(11,18,32,0.55)),
+        radial-gradient(80px 80px at 30% 25%, rgba(53,242,138,0.18), transparent 60%);
+    pointer-events: none;
+    }
+
+    @media (max-width: 720px){
+    .pillar-thumb{ width: 60px; height: 60px; border-radius: 14px; }
+    }
+
+    /* Hover micro-interactions (pillars) */
+    .pillar{
+    transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 180ms ease,
+                background 180ms ease,
+                box-shadow 180ms ease;
+    will-change: transform;
+    }
+
+    .pillar-thumb{
+    transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 180ms ease,
+                border-color 180ms ease;
+    will-change: transform;
+    }
+
+    .pillar-thumb img{
+    transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+    }
+
+    .pillar-thumb::after{
+    transition: opacity 180ms ease, filter 180ms ease;
+    }
+
+    /* Hover */
+    .pillar:hover{
+    transform: translateY(-4px);
+    border-color: rgba(53,242,138,0.28);
+    background: rgba(11,18,32,0.42);
+    box-shadow: 0 22px 60px rgba(0,0,0,0.38);
+    }
+
+    .pillar:hover .pillar-thumb{
+    transform: translateY(-1px);
+    border-color: rgba(53,242,138,0.35);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.34);
+    }
+
+    .pillar:hover .pillar-thumb img{
+    transform: scale(1.08);
+    }
+
+    .pillar:hover .pillar-thumb::after{
+    filter: saturate(1.1);
+    opacity: 0.95;
+    }
+
+    /* Título também reage (bem subtil) */
+    .pillar h3{
+    transition: color 180ms ease;
+    }
+
+    .pillar:hover h3{
+    color: rgba(245,247,250,0.98);
+    }
+
+    /* Acessibilidade: desliga animações para quem prefere menos movimento */
+    @media (prefers-reduced-motion: reduce){
+    .pillar,
+    .pillar-thumb,
+    .pillar-thumb img,
+    .pillar-thumb::after,
+    .pillar h3{
+        transition: none !important;
+    }
+    }
   </style>
 </head>
 
@@ -627,33 +801,70 @@
     </div>
   </main>
 
+    <!-- Faixa visual (full width) -->
+    <section class="photo-band photo-band--full" aria-label="BeyondTraining in real life">
+    <div class="photo-frame photo-frame--full">
+        <img
+        src="assets/bt-band.jpg"
+        alt="A young athlete preparing beyond the pitch"
+        loading="lazy"
+        decoding="async"
+        />
+    </div>
+    </section>
+
+
   <!-- Secção curta abaixo do hero -->
   <section class="after-hero" id="ecosystem">
     <div class="wrap">
       <div class="section-head">
-        <div class="section-eyebrow">THE ECOSYSTEM</div>
+        <div class="section-eyebrow">BT ECOSYSTEM</div>
         <h2>More than a waitlist. A global ecosystem for young athletes.</h2>
         <p class="vision">
           Structure to stay consistent. Opportunity to be seen. A future that lasts beyond the game.
         </p>
       </div>
 
-      <div class="pillars">
+        <div class="pillars">
         <div class="pillar">
-          <h3>Structure</h3>
-          <p>Simple routines across training, nutrition and recovery.</p>
+            <div class="pillar-thumb">
+            <img
+                src="assets/pillars/structure.jpg"
+                alt="Structure"
+                loading="lazy"
+                decoding="async"
+            />
+            </div>
+            <h3>Structure</h3>
+            <p>Simple routines across training, nutrition and recovery — built for consistency.</p>
         </div>
 
         <div class="pillar">
-          <h3>Opportunity</h3>
-          <p>Tools and pathways that help talent get noticed.</p>
+            <div class="pillar-thumb">
+            <img
+                src="assets/pillars/opportunity.jpg"
+                alt="Opportunity"
+                loading="lazy"
+                decoding="async"
+            />
+            </div>
+            <h3>Opportunity</h3>
+            <p>Tools and pathways that help talent get noticed — especially where visibility is low.</p>
         </div>
 
         <div class="pillar">
-          <h3>Future</h3>
-          <p>Support beyond the pitch, so athletes can build a life with and after football.</p>
+            <div class="pillar-thumb">
+            <img
+                src="assets/pillars/future.jpg"
+                alt="Future"
+                loading="lazy"
+                decoding="async"
+            />
+            </div>
+            <h3>Future</h3>
+            <p>Support beyond the pitch, so athletes can build a life with and after football.</p>
         </div>
-      </div>
+        </div>
 
       <div class="partner-cta">
         <a
