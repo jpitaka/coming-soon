@@ -1,0 +1,12 @@
+.DS_Store
+*.psd
+*.tiff
+*.mov
+*.mp4
+*.zip
+
+# imagens pesadas / exports
+assets/**/*.png
+assets/**/*.jpg
+assets/**/*.jpeg
+assets/**/*.webp
