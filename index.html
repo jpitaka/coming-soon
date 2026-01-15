@@ -443,13 +443,59 @@
     }
 
     .pillar{
-      text-align: left;
-      padding: 18px 18px;
-      border-radius: 16px;
-      border: 1px solid rgba(245,247,250,0.12);
-      background: rgba(11,18,32,0.35);
-      backdrop-filter: blur(10px);
+    text-align: left;
+    border-radius: 16px;
+    border: 1px solid rgba(245,247,250,0.12);
+    background: rgba(11,18,32,0.35);
+    backdrop-filter: blur(10px);
+    overflow: hidden;            /* IMPORTANTÍSSIMO para a imagem “cortar” nas bordas */
+    padding: 0;                  /* agora o padding vai para o body */
+    transform: translateY(0);
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
     }
+
+    .pillar-media{
+    position: relative;
+    width: 100%;
+    height: 190px;               /* ajusta: 170–230 conforme preferires */
+    overflow: hidden;
+    }
+
+    .pillar-media img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;           /* imagem “cheia” e centrada */
+    object-position: center;
+    display: block;
+    transform: scale(1);
+    transition: transform 220ms ease, filter 220ms ease;
+    filter: saturate(0.95) contrast(1.05);
+    }
+
+    /* overlay subtil para bater com o navy (mantém consistência) */
+    .pillar-media::after{
+    content:"";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(11,18,32,0.00) 0%, rgba(11,18,32,0.42) 100%);
+    pointer-events: none;
+    }
+
+    .pillar-body{
+    padding: 18px;
+    }
+
+    .pillar:hover{
+    transform: translateY(-4px);
+    border-color: rgba(53,242,138,0.30);
+    background: rgba(11,18,32,0.42);
+    }
+
+    .pillar:hover .pillar-media img{
+    transform: scale(1.04);      /* micro-zoom estilo Framer */
+    }
+
 
     .pillar h3{
       margin: 0 0 8px;
@@ -825,46 +871,38 @@
         </p>
       </div>
 
-        <div class="pillars">
+       <div class="pillars">
         <div class="pillar">
-            <div class="pillar-thumb">
-            <img
-                src="assets/pillars/structure.jpg"
-                alt="Structure"
-                loading="lazy"
-                decoding="async"
-            />
+            <div class="pillar-media">
+            <img src="assets/pillars/structure.jpg" alt="Structure" loading="lazy" />
             </div>
+            <div class="pillar-body">
             <h3>Structure</h3>
             <p>Simple routines across training, nutrition and recovery — built for consistency.</p>
+            </div>
         </div>
 
         <div class="pillar">
-            <div class="pillar-thumb">
-            <img
-                src="assets/pillars/opportunity.jpg"
-                alt="Opportunity"
-                loading="lazy"
-                decoding="async"
-            />
+            <div class="pillar-media">
+            <img src="assets/pillars/opportunity.jpg" alt="Opportunity" loading="lazy" />
             </div>
+            <div class="pillar-body">
             <h3>Opportunity</h3>
             <p>Tools and pathways that help talent get noticed — especially where visibility is low.</p>
+            </div>
         </div>
 
         <div class="pillar">
-            <div class="pillar-thumb">
-            <img
-                src="assets/pillars/future.jpg"
-                alt="Future"
-                loading="lazy"
-                decoding="async"
-            />
+            <div class="pillar-media">
+            <img src="assets/pillars/future.jpg" alt="Future" loading="lazy" />
             </div>
+            <div class="pillar-body">
             <h3>Future</h3>
             <p>Support beyond the pitch, so athletes can build a life with and after football.</p>
+            </div>
         </div>
         </div>
+
 
       <div class="partner-cta">
         <a
