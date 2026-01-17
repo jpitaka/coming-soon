@@ -49,6 +49,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
+    /* ===== Project CSS =====
+       - Purpose: visual system for BeyondTraining landing
+       - Structure: variables (:root), base, layout, components, utilities, responsive
+       - Keep styles grouped and documented so future devs can find sections quickly.
+    */
+
     :root{
       /* Visual Identity */
       --bt-navy: #0B1220;
@@ -409,8 +415,8 @@
 
     /* BT ECOSYSTEM (maior e sem linhas) */
     .section-eyebrow.section-eyebrow--main{
-      letter-spacing: 0.28em;
-      font-size: 0.92rem;        /* mais grande que os outros */
+      letter-spacing: 0.1em;
+      font-size: 1.6rem;        /* maior que os outros */
       font-weight: 700;
       color: rgba(245,247,250,0.68);
       margin-bottom: 16px;
@@ -931,6 +937,10 @@
   </button>
 
   <script>
+    // Form handling
+    // - Submits to Formspree
+    // - Shows a success message and hides the form on success
+    // - Fires a GA event when available
     const form = document.getElementById("email-form");
     const successMessage = document.getElementById("success-message");
 
@@ -944,9 +954,11 @@
       });
 
       if (response.ok) {
+        // Hide the form, show confirmation text
         form.style.display = "none";
         successMessage.style.display = "block";
 
+        // Analytics: only call if gtag is loaded
         if (typeof gtag === "function") {
           gtag("event", "email_signup", {
             event_category: "engagement",
@@ -958,10 +970,14 @@
   </script>
 
   <script>
+    // Cookie consent & analytics loader
+    // - Shows a simple cookie banner if consent not stored
+    // - Loads GA only after acceptance to avoid loading tracking code unnecessarily
     const cookieBanner = document.getElementById("cookie-banner");
     const acceptCookiesBtn = document.getElementById("accept-cookies");
 
     function loadGoogleAnalytics() {
+      // Guard: don't load GA more than once
       if (window.gtag) return;
 
       const script1 = document.createElement("script");
@@ -971,7 +987,7 @@
       const script2 = document.createElement("script");
       script2.innerHTML = `
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag(){dataLayer.push(arguments);} 
         gtag('js', new Date());
         gtag('config', 'G-N0P0H3SXSR');
       `;
@@ -980,6 +996,7 @@
       document.head.appendChild(script2);
     }
 
+    // Show cookie banner if consent missing, otherwise init analytics immediately
     if (!localStorage.getItem("cookiesAccepted")) {
       cookieBanner.style.display = "flex";
       document.body.classList.add("cookies-visible");
@@ -987,6 +1004,7 @@
       loadGoogleAnalytics();
     }
 
+    // When user accepts, persist consent and load analytics
     acceptCookiesBtn.addEventListener("click", () => {
       localStorage.setItem("cookiesAccepted", "true");
       cookieBanner.style.display = "none";
@@ -996,6 +1014,7 @@
   </script>
 
   <script>
+    // Scroll indicator: smooth scroll to next section and visibility logic
     const scrollIndicator = document.getElementById("scroll-indicator");
     const ecosystemSection = document.getElementById("ecosystem");
     const hero = document.querySelector(".hero");
@@ -1006,6 +1025,7 @@
         ecosystemSection.scrollIntoView({ behavior: "smooth" });
       });
 
+      // Use IntersectionObserver when available for precise visibility toggling
       if ("IntersectionObserver" in window && hero) {
         const io = new IntersectionObserver(
           ([entry]) => {
@@ -1016,6 +1036,7 @@
         );
         io.observe(hero);
       } else {
+        // Fallback: basic scroll threshold
         window.addEventListener("scroll", () => {
           scrollIndicator.classList.toggle("is-hidden", window.scrollY > 80);
         });
@@ -1024,32 +1045,37 @@
   </script>
 
   <script>
+    // Back-to-top button + overlap avoidance with cookie banner
     const toTopBtn = document.getElementById("to-top");
     const cookieBannerEl = document.getElementById("cookie-banner");
 
     function updateToTopVisibility() {
-      const showFrom = 260;
+      const showFrom = 260; // pixels scrolled before button appears
       if (window.scrollY > showFrom) toTopBtn.classList.add("show");
       else toTopBtn.classList.remove("show");
     }
 
     function updateToTopOffset() {
+      // If the cookie banner is visible, push the to-top button up to avoid overlap
       const bannerVisible = cookieBannerEl && getComputedStyle(cookieBannerEl).display !== "none";
-      toTopBtn.style.bottom = bannerVisible ? "96px" : "";
+      toTopBtn.style.bottom = bannerVisible ? "96px" : "22px"; // default spacing restored when banner hidden
     }
 
     toTopBtn.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
+    // Update on scroll (passive for performance)
     window.addEventListener("scroll", () => {
       updateToTopVisibility();
       updateToTopOffset();
     }, { passive: true });
 
+    // Run once on load to set initial state
     updateToTopVisibility();
     updateToTopOffset();
 
+    // Ensure offset updates after cookie accept animation/DOM changes
     const acceptBtn = document.getElementById("accept-cookies");
     if (acceptBtn) {
       acceptBtn.addEventListener("click", () => setTimeout(updateToTopOffset, 0));
