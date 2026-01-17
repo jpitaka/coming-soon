@@ -30,17 +30,18 @@
   />
 
   <meta http-equiv="Content-Language" content="en" />
-    <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
-    <link rel="shortcut icon" href="assets/favicon_io/favicon.ico?">
 
-    <!-- iOS / Mobile -->
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png?">
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
+  <link rel="shortcut icon" href="assets/favicon_io/favicon.ico?">
 
-    <!-- Optional (nice to have) -->
-    <link rel="manifest" href="assets/favicon_io/site.webmanifest?">
-    <meta name="theme-color" content="#0B1220">
+  <!-- iOS / Mobile -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png?">
+
+  <!-- Optional -->
+  <link rel="manifest" href="assets/favicon_io/site.webmanifest?">
+  <meta name="theme-color" content="#0B1220">
 
   <!-- Fonts (Visual Identity) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,7 +57,7 @@
       --graphite: #111827;
       --steel-grey: #6B7280;
 
-      /* Mapeamento para o teu layout */
+      /* Mapping */
       --bg-0: var(--bt-navy);
       --bg-1: #070B14;
 
@@ -84,45 +85,46 @@
     }
 
     html, body{ height: 100%; }
+    html { scroll-behavior: smooth; }
 
     body{
-    margin: 0;
-    color: var(--text);
-    background: none;       /* fundo vai para ::after */
-    overflow-x: hidden;
-    position: relative;     /* para gerir z-index */
+      margin: 0;
+      color: var(--text);
+      background: none;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    /* fundo fixo (não muda com o scroll) */
+    /* Fixed background (doesn't change with scroll) */
     body::after{
-    content:"";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -2;
-    background:
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+      background:
         radial-gradient(900px 600px at 20% 10%, rgba(53,242,138,0.14), transparent 55%),
         radial-gradient(700px 500px at 80% 35%, rgba(53,242,138,0.05), transparent 60%),
         linear-gradient(180deg, var(--bg-0), var(--bg-1));
     }
 
-
+    /* Grid overlay */
     body::before{
-    content:"";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1; /* fica acima do fundo, mas atrás do conteúdo */
-    background-image:
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image:
         linear-gradient(var(--grid) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size: 48px 48px;
-    opacity: 0.28;
-    mask-image: radial-gradient(circle at 50% 25%,
+      background-size: 48px 48px;
+      opacity: 0.28;
+      mask-image: radial-gradient(circle at 50% 25%,
         rgba(0,0,0,1) 0%,
         rgba(0,0,0,0.45) 62%,
         rgba(0,0,0,0) 88%
-    );
+      );
     }
 
     .wrap{
@@ -132,7 +134,7 @@
       padding: 0 28px;
     }
 
-    /* HERO centrado */
+    /* HERO */
     .hero{
       min-height: 100vh;
       display: flex;
@@ -143,7 +145,7 @@
       overflow: hidden;
     }
 
-    /* Progress Path (subtil) */
+    /* Progress Path (subtle) */
     .progress-path{
       position: absolute;
       inset: 0;
@@ -161,7 +163,7 @@
     }
 
     .path-base{
-      stroke: rgba(245,247,250,0.08); /* ~8% */
+      stroke: rgba(245,247,250,0.08);
       stroke-width: 2;
       fill: none;
       stroke-linecap: round;
@@ -169,7 +171,7 @@
     }
 
     .path-accent{
-      stroke: rgba(53,242,138,0.10); /* ~10% */
+      stroke: rgba(53,242,138,0.10);
       stroke-width: 2;
       fill: none;
       stroke-linecap: round;
@@ -189,7 +191,7 @@
       justify-items: center;
       text-align: center;
       position: relative;
-      z-index: 1; /* acima do path */
+      z-index: 1;
     }
 
     .eyebrow{
@@ -302,7 +304,6 @@
       font-weight: 500;
     }
 
-    /* animação */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: translateY(0); }
@@ -318,89 +319,77 @@
       align-items: center;
     }
 
-    /* Faixa visual full-bleed (de fora a fora) */
+    /* Full-bleed photo band */
     .photo-band--full{
-    padding: 0;               /* sem “margens” em cima/baixo, fica colado */
-    position: relative;
+      padding: 0;
+      position: relative;
     }
 
     .photo-frame--full{
-    position: relative;
-    width: 100vw;
-    margin-left: 50%;
-    transform: translateX(-50%);
-    border-radius: 0;
-    overflow: hidden;
+      position: relative;
+      width: 100vw;
+      margin-left: 50%;
+      transform: translateX(-50%);
+      border-radius: 0;
+      overflow: hidden;
+      border: none;
+      box-shadow: none;
 
-    /* remove qualquer “linha” */
-    border: none;
-    box-shadow: none;
+      aspect-ratio: 16 / 9;
+      max-height: 520px;
+      background: transparent;
 
-    aspect-ratio: 16 / 9;
-    max-height: 520px;
-    background: transparent;
+      isolation: isolate;
 
-    /* isto ajuda a “colar” visualmente */
-    isolation: isolate;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(245,247,250,0.03), transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(245,247,250,0.02), transparent 60%);
+      background-blend-mode: overlay;
     }
 
     .photo-frame--full img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    /* overlay navy + toque pulse (mais suave e menos “chapado”) */
     .photo-frame--full::after{
-    content:"";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    background:
+      content:"";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background:
         radial-gradient(900px 480px at 18% 28%, rgba(53,242,138,0.12), transparent 58%),
         radial-gradient(700px 520px at 82% 60%, rgba(53,242,138,0.07), transparent 62%),
         linear-gradient(180deg, rgba(11,18,32,0.42), rgba(11,18,32,0.50));
     }
 
-    /* fade “real” nas margens (top + bottom) para fundir com o background */
     .photo-frame--full::before{
-    content:"";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-
-    /* 1) Top fade  2) Bottom fade  3) Vignette lateral */
-    background:
+      content:"";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background:
         linear-gradient(to bottom, rgba(11,18,32,0.92) 0%, rgba(11,18,32,0.0) 22%),
         linear-gradient(to top,    rgba(11,18,32,0.92) 0%, rgba(11,18,32,0.0) 22%),
         radial-gradient(120% 90% at 50% 50%, rgba(11,18,32,0.0) 55%, rgba(11,18,32,0.55) 100%);
     }
 
-    /* opcional: micro-grain para esconder seams (se não quiseres, remove este bloco) */
-    .photo-frame--full{
-    background-image:
-        radial-gradient(circle at 20% 30%, rgba(245,247,250,0.03), transparent 55%),
-        radial-gradient(circle at 80% 70%, rgba(245,247,250,0.02), transparent 60%);
-    background-blend-mode: overlay;
-    }
-
-
-    /* Secção abaixo do hero */
+    /* Below hero section */
     .after-hero{
-    padding: 70px 0 90px;
-    border-top: none;     /* remove a linha */
-    background: transparent;
-    margin-top: -1px;     /* mata qualquer seam de 1px */
-    position: relative;
-    z-index: 1;
+      padding: 70px 0 90px;
+      border-top: none;
+      background: transparent;
+      margin-top: -1px;
+      position: relative;
+      z-index: 1;
     }
-
 
     .section-head{
-      max-width: 860px;
+      max-width: 920px;
       margin: 0 auto 26px;
       text-align: center;
     }
@@ -418,6 +407,22 @@
       font-weight: 500;
     }
 
+    /* BT ECOSYSTEM (maior e sem linhas) */
+    .section-eyebrow.section-eyebrow--main{
+      letter-spacing: 0.28em;
+      font-size: 0.92rem;        /* mais grande que os outros */
+      font-weight: 700;
+      color: rgba(245,247,250,0.68);
+      margin-bottom: 16px;
+      display: block; /* força a eyebrow a ocupar toda a linha */
+      text-align: center;
+    }
+
+    .section-eyebrow.section-eyebrow--main::before,
+    .section-eyebrow.section-eyebrow--main::after{
+      display: none;             /* remove as linhas laterais */
+    }
+
     .section-eyebrow::before,
     .section-eyebrow::after{
       content:"";
@@ -426,134 +431,107 @@
       background: rgba(245,247,250,0.18);
     }
 
-    .after-hero h2{
-      margin: 0 0 10px;
+    /* Titles: Our Vision / Our Mission / Our Values */
+    .sub-title{
+      display: block; /* ocupar linha inteira para ficar abaixo da eyebrow */
+      text-align: center;
+      color: var(--muted2);
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin: 12px 0 12px;
+    }
+
+    .sub-title::before,
+    .sub-title::after{
+      content:"";
+      width: 24px;
+      height: 1px;
+      background: rgba(245,247,250,0.18);
+    }
+
+    /* Vision + Mission (plain, big) */
+    .mv-vision{
+      margin: 0;
       font-family: var(--font-head);
       font-weight: 700;
       letter-spacing: -0.02em;
       font-size: 2.05rem;
+      line-height: 1.12;
       color: rgba(245,247,250,0.94);
     }
 
-    .vision{
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 1.02rem;
-      max-width: 760px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Mission / Vision (plain, big) */
-    .mv-plain{
-      max-width: 920px;
-      margin: 18px auto 30px;
-      text-align: center;
-    }
-
-    .mv-line{
+    .mv-mission{
       margin: 0;
       font-family: var(--font-head);
-      letter-spacing: -0.02em;
-      line-height: 1.18;
-      color: rgba(245,247,250,0.92);
-    }
-
-    .mv-vision{
-      font-size: 1.85rem;
-      font-weight: 700;
-    }
-
-    .mv-mission{
-      margin-top: 12px;
-      font-size: 1.35rem;
       font-weight: 600;
+      letter-spacing: -0.015em;
+      font-size: 1.35rem;
+      line-height: 1.18;
       color: rgba(245,247,250,0.78);
     }
 
-    /* um separador subtil entre as duas frases */
-    .mv-mission::before{
-      content:"";
-      display: block;
-      width: 900px;
-      height: 2px;
-      margin: 14px auto 14px;
-      border-radius: 999px;
-      background: rgba(53,242,138,0.55);
-    }
-
-    @media (max-width: 980px){
-      .mv-vision{ font-size: 1.6rem; }
-      .mv-mission{ font-size: 1.2rem; }
-    }
-
-    @media (max-width: 720px){
-      .mv-vision{ font-size: 1.35rem; }
-      .mv-mission{ font-size: 1.05rem; }
-    }
-
+    /* Values */
     .pillars{
-      margin-top: 22px;
+      margin-top: 18px;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
     }
 
     .pillar{
-    text-align: left;
-    border-radius: 16px;
-    border: 1px solid rgba(245,247,250,0.12);
-    background: rgba(11,18,32,0.35);
-    backdrop-filter: blur(10px);
-    overflow: hidden;            /* IMPORTANTÍSSIMO para a imagem “cortar” nas bordas */
-    padding: 0;                  /* agora o padding vai para o body */
-    transform: translateY(0);
-    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      text-align: left;
+      border-radius: 16px;
+      border: 1px solid rgba(245,247,250,0.12);
+      background: rgba(11,18,32,0.35);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+      padding: 0;
+      transform: translateY(0);
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
     }
 
     .pillar-media{
-    position: relative;
-    width: 100%;
-    height: 190px;               /* ajusta: 170–230 conforme preferires */
-    overflow: hidden;
+      position: relative;
+      width: 100%;
+      height: 190px;
+      overflow: hidden;
     }
 
     .pillar-media img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;           /* imagem “cheia” e centrada */
-    object-position: center;
-    display: block;
-    transform: scale(1);
-    transition: transform 220ms ease, filter 220ms ease;
-    filter: saturate(0.95) contrast(1.05);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transform: scale(1);
+      transition: transform 220ms ease, filter 220ms ease;
+      filter: saturate(0.95) contrast(1.05);
     }
 
-    /* overlay subtil para bater com o navy (mantém consistência) */
     .pillar-media::after{
-    content:"";
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(180deg, rgba(11,18,32,0.00) 0%, rgba(11,18,32,0.42) 100%);
-    pointer-events: none;
+      content:"";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(11,18,32,0.00) 0%, rgba(11,18,32,0.42) 100%);
+      pointer-events: none;
     }
 
     .pillar-body{
-    padding: 18px;
+      padding: 18px;
     }
 
     .pillar:hover{
-    transform: translateY(-4px);
-    border-color: rgba(53,242,138,0.30);
-    background: rgba(11,18,32,0.42);
+      transform: translateY(-4px);
+      border-color: rgba(53,242,138,0.30);
+      background: rgba(11,18,32,0.42);
+      box-shadow: 0 22px 60px rgba(0,0,0,0.38);
     }
 
     .pillar:hover .pillar-media img{
-    transform: scale(1.04);      /* micro-zoom estilo Framer */
+      transform: scale(1.04);
     }
-
 
     .pillar h3{
       margin: 0 0 8px;
@@ -562,6 +540,11 @@
       font-size: 1.08rem;
       letter-spacing: -0.01em;
       color: rgba(245,247,250,0.93);
+      transition: color 180ms ease;
+    }
+
+    .pillar:hover h3{
+      color: rgba(245,247,250,0.98);
     }
 
     .pillar p{
@@ -599,7 +582,7 @@
       background: rgba(53,242,138,0.12);
     }
 
-    /* cookie banner */
+    /* Cookie banner */
     #cookie-banner{
       position: fixed;
       bottom: 18px;
@@ -642,10 +625,131 @@
       box-shadow: 0 10px 30px rgba(53,242,138,0.12);
     }
 
+    /* Scroll down indicator */
+    .scroll-indicator{
+      position: absolute;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%);
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      text-decoration: none;
+      z-index: 2;
+      opacity: 0.9;
+      transition: transform 180ms ease, opacity 180ms ease, filter 180ms ease;
+    }
+
+    .scroll-indicator svg{
+      width: 46px;
+      height: 46px;
+      transition: transform 180ms ease;
+    }
+
+    .scroll-indicator .frame{
+      stroke: rgba(245,247,250,0.90);
+      stroke-width: 3.5;
+      fill: transparent;
+    }
+
+    .scroll-indicator .arrow{
+      stroke: rgba(245,247,250,0.90);
+      stroke-width: 3.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .scroll-indicator:hover{
+      transform: translateX(-50%) translateY(-2px) scale(1.02);
+      opacity: 1;
+      filter: brightness(1.02);
+    }
+
+    .scroll-indicator:hover svg{
+      transform: translateY(2px);
+    }
+
+    .scroll-indicator:hover .frame,
+    .scroll-indicator:hover .arrow{
+      stroke: rgba(53,242,138,0.95);
+    }
+
+    .scroll-indicator:focus-visible{
+      outline: 3px solid rgba(53,242,138,0.55);
+      outline-offset: 6px;
+      border-radius: 999px;
+    }
+
+    .scroll-indicator.is-hidden{
+      opacity: 0;
+      transform: translateX(-50%) translateY(12px);
+      pointer-events: none;
+    }
+
+    body.cookies-visible .scroll-indicator{
+      bottom: 96px;
+    }
+
+    /* Back to top */
+    .to-top{
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+
+      display: grid;
+      place-items: center;
+
+      background: rgba(11,18,32,0.68);
+      border: 1px solid rgba(245,247,250,0.16);
+      color: rgba(245,247,250,0.92);
+
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+
+      cursor: pointer;
+      transition: transform 180ms ease, opacity 180ms ease, border-color 180ms ease, background 180ms ease;
+
+      z-index: 10001;
+      touch-action: manipulation;
+    }
+
+    .to-top svg{
+      width: 20px;
+      height: 20px;
+      transition: transform 180ms ease, color 180ms ease;
+    }
+
+    .to-top.show{
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .to-top:hover{
+      transform: translateY(-3px);
+      border-color: rgba(53,242,138,0.40);
+      background: rgba(11,18,32,0.78);
+    }
+
+    .to-top:hover svg{
+      transform: translateY(-1px);
+      color: var(--pulse-green);
+    }
+
     @media (max-width: 980px){
       h1{ font-size: 3.1rem; }
       .pillars{ grid-template-columns: 1fr; }
-      .after-hero h2{ font-size: 1.85rem; }
+      .mv-vision{ font-size: 1.85rem; }
+      .mv-mission{ font-size: 1.2rem; }
     }
 
     @media (max-width: 720px){
@@ -668,244 +772,21 @@
       #cookie-banner{ flex-direction: column; align-items: flex-start; }
       #cookie-banner button{ width: 100%; }
 
-      /* no mobile, escondemos o path para ficar limpo */
       .progress-path{ display: none; }
-    }
-    /* Smooth anchor scroll (extra, mesmo com JS) */
-    html { scroll-behavior: smooth; }
 
-    /* Scroll down indicator */
-    .scroll-indicator{
-    position: absolute;
-    left: 50%;
-    bottom: 28px;
-    transform: translateX(-50%);
-    width: 56px;
-    height: 56px;
-    display: grid;
-    place-items: center;
-    text-decoration: none;
-    z-index: 2;
-    opacity: 0.9;
-    transition: transform 180ms ease, opacity 180ms ease, filter 180ms ease;
+      body.cookies-visible .scroll-indicator{ bottom: 120px; }
+      .to-top{ right: 16px; bottom: 16px; }
     }
 
-    .scroll-indicator svg{
-    width: 46px;
-    height: 46px;
-    transition: transform 180ms ease;
-    }
-
-    .scroll-indicator .frame{
-    stroke: rgba(245,247,250,0.90);
-    stroke-width: 3.5;
-    fill: transparent;
-    }
-
-    .scroll-indicator .arrow{
-    stroke: rgba(245,247,250,0.90);
-    stroke-width: 3.5;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    }
-
-    .scroll-indicator:hover{
-    transform: translateX(-50%) translateY(-2px) scale(1.02);
-    opacity: 1;
-    filter: brightness(1.02);
-    }
-
-    .scroll-indicator:hover svg{
-    transform: translateY(2px);
-    }
-
-    .scroll-indicator:hover .frame,
-    .scroll-indicator:hover .arrow{
-    stroke: rgba(53,242,138,0.95);
-    }
-
-    .scroll-indicator:focus-visible{
-    outline: 3px solid rgba(53,242,138,0.55);
-    outline-offset: 6px;
-    border-radius: 999px;
-    }
-
-    /* esconder ao fazer scroll */
-    .scroll-indicator.is-hidden{
-    opacity: 0;
-    transform: translateX(-50%) translateY(12px);
-    pointer-events: none;
-    }
-
-    /* se o banner de cookies estiver visível, sobe a seta para não bater */
-    body.cookies-visible .scroll-indicator{
-    bottom: 96px;
-    }
-
-    @media (max-width: 720px){
-    body.cookies-visible .scroll-indicator{ bottom: 120px; }
-    }
-
-    /* Pillar thumbnail */
-    .pillar-thumb{
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid rgba(245,247,250,0.14);
-    background: rgba(11,18,32,0.35);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    margin-bottom: 12px;
-    position: relative;
-    }
-
-    .pillar-thumb img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transform: scale(1.02);
-    }
-
-    /* Duotone/overlay consistente */
-    .pillar-thumb::after{
-    content:"";
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(180deg, rgba(11,18,32,0.35), rgba(11,18,32,0.55)),
-        radial-gradient(80px 80px at 30% 25%, rgba(53,242,138,0.18), transparent 60%);
-    pointer-events: none;
-    }
-
-    @media (max-width: 720px){
-    .pillar-thumb{ width: 60px; height: 60px; border-radius: 14px; }
-    }
-
-    /* Hover micro-interactions (pillars) */
-    .pillar{
-    transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 180ms ease,
-                background 180ms ease,
-                box-shadow 180ms ease;
-    will-change: transform;
-    }
-
-    .pillar-thumb{
-    transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 180ms ease,
-                border-color 180ms ease;
-    will-change: transform;
-    }
-
-    .pillar-thumb img{
-    transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform;
-    }
-
-    .pillar-thumb::after{
-    transition: opacity 180ms ease, filter 180ms ease;
-    }
-
-    /* Hover */
-    .pillar:hover{
-    transform: translateY(-4px);
-    border-color: rgba(53,242,138,0.28);
-    background: rgba(11,18,32,0.42);
-    box-shadow: 0 22px 60px rgba(0,0,0,0.38);
-    }
-
-    .pillar:hover .pillar-thumb{
-    transform: translateY(-1px);
-    border-color: rgba(53,242,138,0.35);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.34);
-    }
-
-    .pillar:hover .pillar-thumb img{
-    transform: scale(1.08);
-    }
-
-    .pillar:hover .pillar-thumb::after{
-    filter: saturate(1.1);
-    opacity: 0.95;
-    }
-
-    /* Título também reage (bem subtil) */
-    .pillar h3{
-    transition: color 180ms ease;
-    }
-
-    .pillar:hover h3{
-    color: rgba(245,247,250,0.98);
-    }
-
-    /* Acessibilidade: desliga animações para quem prefere menos movimento */
     @media (prefers-reduced-motion: reduce){
-    .pillar,
-    .pillar-thumb,
-    .pillar-thumb img,
-    .pillar-thumb::after,
-    .pillar h3{
+      .pillar,
+      .pillar-media img,
+      .scroll-indicator,
+      .scroll-indicator svg,
+      .to-top,
+      .to-top svg{
         transition: none !important;
-    }
-    }
-
-    .to-top{
-    position: fixed;
-    right: 22px;
-    bottom: 22px;
-    width: 48px;
-    height: 48px;
-    border-radius: 999px;
-
-    display: grid;
-    place-items: center;
-
-    background: rgba(11,18,32,0.68);
-    border: 1px solid rgba(245,247,250,0.16);
-    color: rgba(245,247,250,0.92);
-
-    backdrop-filter: blur(10px);
-    box-shadow: 0 18px 50px rgba(0,0,0,0.35);
-
-    opacity: 0;
-    transform: translateY(10px);
-    pointer-events: none;
-
-    cursor: pointer;
-    transition: transform 180ms ease, opacity 180ms ease, border-color 180ms ease, background 180ms ease;
-
-    z-index: 10001;          /* 👈 garante que fica por cima */
-    touch-action: manipulation; /* 👈 melhor em mobile */
-    }
-
-
-    .to-top svg{
-    width: 20px;
-    height: 20px;
-    transition: transform 180ms ease, color 180ms ease;
-    }
-
-    .to-top.show{
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-    }
-
-    .to-top:hover{
-    transform: translateY(-3px);
-    border-color: rgba(53,242,138,0.40);
-    background: rgba(11,18,32,0.78);
-    }
-
-    .to-top:hover svg{
-    transform: translateY(-1px);
-    color: var(--pulse-green);
-    }
-
-    @media (max-width: 720px){
-    .to-top{ right: 16px; bottom: 16px; }
+      }
     }
   </style>
 </head>
@@ -947,80 +828,83 @@
           </div>
         </div>
       </div>
+
       <a
         href="#ecosystem"
         class="scroll-indicator"
         id="scroll-indicator"
         aria-label="Scroll down to the next section"
-        >
+      >
         <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="16" y="6" width="32" height="52" rx="16" class="frame"></rect>
-            <line x1="32" y1="22" x2="32" y2="40" class="arrow"></line>
-            <polyline points="25,34 32,41 39,34" class="arrow"></polyline>
+          <rect x="16" y="6" width="32" height="52" rx="16" class="frame"></rect>
+          <line x1="32" y1="22" x2="32" y2="40" class="arrow"></line>
+          <polyline points="25,34 32,41 39,34" class="arrow"></polyline>
         </svg>
-        </a>
+      </a>
     </div>
   </main>
 
-    <!-- Faixa visual (full width) -->
-    <section class="photo-band photo-band--full" aria-label="BeyondTraining in real life">
+  <!-- Full-width photo band -->
+  <section class="photo-band photo-band--full" aria-label="BeyondTraining in real life">
     <div class="photo-frame photo-frame--full">
-        <img
+      <img
         src="assets/bt-band.jpg"
         alt="A young athlete preparing beyond the pitch"
         loading="lazy"
         decoding="async"
-        />
+      />
     </div>
-    </section>
+  </section>
 
-
-  <!-- Secção curta abaixo do hero -->
+  <!-- Ecosystem -->
   <section class="after-hero" id="ecosystem">
     <div class="wrap">
       <div class="section-head">
-        <div class="section-eyebrow">BT ECOSYSTEM</div>
-        <h2>
+        <div class="section-eyebrow section-eyebrow--main">BT ECOSYSTEM</div>
+        <div class="sub-title">Our Vision</div>
+        <h2 class="mv-vision">
           A world where sport shapes strong, balanced people, regardless of whether they reach the top.
         </h2>
-      </div>
-      <div class="mv-plain" aria-label="Vision and mission">
-        <p class="mv-line mv-mission">
+
+        <div class="sub-title">Our Mission</div>
+        <p class="mv-mission">
           Empowering young athletes to grow and compete with emotional structure, clarity, and long-term balance.
         </p>
+
+        <div class="sub-title" style="margin-top: 26px;">Our Values</div>
       </div>
-       <div class="pillars">
+
+      <div class="pillars">
         <div class="pillar">
-            <div class="pillar-media">
+          <div class="pillar-media">
             <img src="assets/pillars/structure.jpg" alt="Structure" loading="lazy" />
-            </div>
-            <div class="pillar-body">
+          </div>
+          <div class="pillar-body">
             <h3>Structure</h3>
             <p>Simple routines across training, nutrition and recovery built for consistency.</p>
-            </div>
+          </div>
         </div>
 
         <div class="pillar">
-            <div class="pillar-media">
+          <div class="pillar-media">
             <img src="assets/pillars/opportunity.jpg" alt="Opportunity" loading="lazy" />
-            </div>
-            <div class="pillar-body">
+          </div>
+          <div class="pillar-body">
             <h3>Opportunity</h3>
             <p>Tools and pathways that help talent get noticed especially where visibility is low.</p>
-            </div>
+          </div>
         </div>
 
         <div class="pillar">
-            <div class="pillar-media">
+          <div class="pillar-media">
             <img src="assets/pillars/future.jpg" alt="Future" loading="lazy" />
-            </div>
-            <div class="pillar-body">
+          </div>
+          <div class="pillar-body">
             <h3>Future</h3>
             <p>Support beyond the pitch, so athletes can build a life with and after football.</p>
-            </div>
+          </div>
         </div>
-        </div>
-
+      </div>
 
       <div class="partner-cta">
         <a
@@ -1033,18 +917,18 @@
     </div>
   </section>
 
-  <!-- Cookie banner (1x) -->
+  <!-- Cookie banner -->
   <div id="cookie-banner">
     <p>This website uses cookies to analyse traffic and improve your experience.</p>
     <button id="accept-cookies">Accept</button>
   </div>
 
-    <button id="to-top" class="to-top" type="button" aria-label="Back to top">
-        <!-- ícone seta para cima (SVG) -->
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 5l-6 6m6-6l6 6M12 5v14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </button>
+  <!-- Back to top -->
+  <button id="to-top" class="to-top" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 5l-6 6m6-6l6 6M12 5v14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 
   <script>
     const form = document.getElementById("email-form");
@@ -1097,10 +981,10 @@
     }
 
     if (!localStorage.getItem("cookiesAccepted")) {
-    cookieBanner.style.display = "flex";
-    document.body.classList.add("cookies-visible");
+      cookieBanner.style.display = "flex";
+      document.body.classList.add("cookies-visible");
     } else {
-    loadGoogleAnalytics();
+      loadGoogleAnalytics();
     }
 
     acceptCookiesBtn.addEventListener("click", () => {
@@ -1110,70 +994,66 @@
       document.body.classList.remove("cookies-visible");
     });
   </script>
-    <script>
+
+  <script>
     const scrollIndicator = document.getElementById("scroll-indicator");
     const ecosystemSection = document.getElementById("ecosystem");
     const hero = document.querySelector(".hero");
 
     if (scrollIndicator && ecosystemSection) {
-        scrollIndicator.addEventListener("click", (e) => {
+      scrollIndicator.addEventListener("click", (e) => {
         e.preventDefault();
         ecosystemSection.scrollIntoView({ behavior: "smooth" });
-        });
+      });
 
-        // Esconde a seta quando começas a sair do hero
-        if ("IntersectionObserver" in window && hero) {
+      if ("IntersectionObserver" in window && hero) {
         const io = new IntersectionObserver(
-            ([entry]) => {
+          ([entry]) => {
             const show = entry.isIntersecting && entry.intersectionRatio > 0.6;
             scrollIndicator.classList.toggle("is-hidden", !show);
-            },
-            { threshold: [0, 0.25, 0.6, 1] }
+          },
+          { threshold: [0, 0.25, 0.6, 1] }
         );
         io.observe(hero);
-        } else {
-        // fallback simples
+      } else {
         window.addEventListener("scroll", () => {
-            scrollIndicator.classList.toggle("is-hidden", window.scrollY > 80);
+          scrollIndicator.classList.toggle("is-hidden", window.scrollY > 80);
         });
-        }
+      }
     }
-    </script>
+  </script>
 
-    <script>
+  <script>
     const toTopBtn = document.getElementById("to-top");
     const cookieBannerEl = document.getElementById("cookie-banner");
 
     function updateToTopVisibility() {
-        const showFrom = 260; // px
-        if (window.scrollY > showFrom) toTopBtn.classList.add("show");
-        else toTopBtn.classList.remove("show");
+      const showFrom = 260;
+      if (window.scrollY > showFrom) toTopBtn.classList.add("show");
+      else toTopBtn.classList.remove("show");
     }
 
     function updateToTopOffset() {
-        // Se o banner de cookies estiver visível, sobe o botão para não colidir
-        const bannerVisible = cookieBannerEl && getComputedStyle(cookieBannerEl).display !== "none";
-        toTopBtn.style.bottom = bannerVisible ? "96px" : "";
+      const bannerVisible = cookieBannerEl && getComputedStyle(cookieBannerEl).display !== "none";
+      toTopBtn.style.bottom = bannerVisible ? "96px" : "";
     }
 
     toTopBtn.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     window.addEventListener("scroll", () => {
-        updateToTopVisibility();
-        updateToTopOffset();
+      updateToTopVisibility();
+      updateToTopOffset();
     }, { passive: true });
 
-    // estado inicial
     updateToTopVisibility();
     updateToTopOffset();
 
-    // quando aceitas cookies o banner desaparece — atualiza a posição
     const acceptBtn = document.getElementById("accept-cookies");
     if (acceptBtn) {
-        acceptBtn.addEventListener("click", () => setTimeout(updateToTopOffset, 0));
+      acceptBtn.addEventListener("click", () => setTimeout(updateToTopOffset, 0));
     }
-    </script>
+  </script>
 </body>
 </html>
