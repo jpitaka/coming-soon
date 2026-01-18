@@ -415,33 +415,25 @@
       justify-content: center;
       gap: 10px;
       color: var(--muted2);
-      font-size: 0.78rem;
+      font-size: 1.2rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       margin-bottom: 14px;
       font-weight: 500;
     }
 
-    /* BT ECOSYSTEM (maior e sem linhas) */
-    .section-eyebrow.section-eyebrow--main{
-      letter-spacing: 0.1em;
-      font-size: 1.6rem;        /* maior que os outros */
-      font-weight: 700;
-      color: rgba(245,247,250,0.68);
-      margin-bottom: 16px;
-      display: block; /* força a eyebrow a ocupar toda a linha */
-      text-align: center;
-    }
-
-    .section-eyebrow.section-eyebrow--main::before,
-    .section-eyebrow.section-eyebrow--main::after{
-      display: none;             /* remove as linhas laterais */
+    .section-eyebrow--ecosystem::before,
+    .section-eyebrow--ecosystem::after{
+      content:"";
+      width: 32px;
+      height: 1px;
+      background: rgba(245,247,250,0.18);
     }
 
     .section-eyebrow::before,
     .section-eyebrow::after{
       content:"";
-      width: 26px;
+      width: 32px;
       height: 1px;
       background: rgba(245,247,250,0.18);
     }
@@ -875,7 +867,7 @@
   <section class="after-hero" id="ecosystem">
     <div class="wrap">
       <div class="section-head">
-        <div class="section-eyebrow section-eyebrow--main">BT ECOSYSTEM</div>
+        <div class="section-eyebrow section-eyebrow--ecosystem">BT ECOSYSTEM</div>
         <div class="sub-title">Our Vision</div>
         <h2 class="mv-vision">
           A world where sport shapes strong, balanced people, regardless of whether they reach the top.
